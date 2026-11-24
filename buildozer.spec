@@ -10,8 +10,8 @@ source.exclude_dirs = build,bin,.buildozer,__pycache__,.git,.github
 
 version = 1.0.0.1
 
-# 固定为本地已验证的版本，避免 p4a 默认拉取 Python 3.14 导致 pygame 编译失败
-requirements = python3==3.11.9,pygame==2.6.1
+# 同时固定 hostpython3 与 python3，避免 p4a 默认使用 Python 3.14 造成版本不匹配
+requirements = hostpython3==3.11.9,python3==3.11.9,pygame==2.6.1
 
 orientation = landscape
 fullscreen = 1
