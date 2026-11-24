@@ -35,7 +35,7 @@ python -m pip install buildozer
 buildozer android debug
 ```
 
-生成的 APK 位于 `bin/` 目录。首次构建需要安装 JDK、Android SDK/NDK，耗时较长。`buildozer.spec` 已同时固定 `hostpython3==3.11.9`、`python3==3.11.9` 与 `pygame==2.6.1`，避免 python-for-android 默认拉取 Python 3.14 导致版本不匹配或 pygame 编译失败。
+生成的 APK 位于 `bin/` 目录。首次构建需要安装 JDK、Android SDK/NDK，耗时较长。`buildozer.spec` 已固定 `hostpython3==3.11.9`、`python3==3.11.9`、`cython==0.29.37` 与 `pygame==2.6.1`，解决 Python 版本不匹配及 pygame 在 p4a 隔离环境中缺少 Cython 的问题。
 
 ### 云端自动打包（推荐）
 
