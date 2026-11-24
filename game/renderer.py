@@ -9,7 +9,15 @@ from . import config as C
 _FONT_CACHE = {}
 _FONT_FILE_CACHE = {}
 
-# 直接指定系统中文字体文件，避免部分平台 pygame 字体枚举异常导致中文变方框
+# 项目内置开源中文字体（Noto Sans SC），网页版(pygbag)与 Android 都优先使用它，
+# 避免系统字体枚举异常或缺失导致中文变方框。
+_BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_BUNDLED_FONT_FILES = (
+    os.path.join(_BASE_DIR, "assets", "NotoSansSC-Regular.otf"),
+    os.path.join(_BASE_DIR, "assets", "NotoSansSC-Regular.ttf"),
+)
+
+# 系统中文字体作为兜底
 _ANDROID_FONT_DIR = "/system/fonts"
 _WIN_FONT_DIR = os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts")
 _ANDROID_FONT_FILES = (
@@ -36,7 +44,7 @@ _OTHER_FONT_FILES = (
     "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc",
     "/usr/share/fonts/truetype/arphic/uming.ttc",
 )
-_CJK_FONT_FILES = _ANDROID_FONT_FILES + _WINDOWS_FONT_FILES + _OTHER_FONT_FILES
+_CJK_FONT_FILES = _BUNDLED_FONT_FILES + _ANDROID_FONT_FILES + _WINDOWS_FONT_FILES + _OTHER_FONT_FILES
 
 # SysFont 名称仅作为直接文件路径不可用时的兜底
 _CJK_FONT_NAMES = (
