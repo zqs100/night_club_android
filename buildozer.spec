@@ -24,6 +24,9 @@ android.permissions =
 android.api = 33
 android.minapi = 21
 android.ndk = 25b
+# version=1.0.0.1 被 p4a 自动算成 10211000001，超过 Android versionCode 的
+# 32 位有符号上限，AGP 8.11 解析为 null 导致 Gradle "Value is null"。显式指定。
+android.numeric_version = 1
 
 [buildozer]
 log_level = 2
