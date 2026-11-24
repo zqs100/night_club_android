@@ -10,8 +10,8 @@ source.exclude_dirs = build,bin,.buildozer,__pycache__,.git,.github
 
 version = 1.0.0.1
 
-# python-for-android 的 pygame recipe 版本由构建环境决定；游戏内不依赖特定小版本
-requirements = python3,pygame
+# 固定为本地已验证的版本，避免 p4a 默认拉取 Python 3.14 导致 pygame 编译失败
+requirements = python3==3.11.9,pygame==2.6.1
 
 orientation = landscape
 fullscreen = 1
@@ -19,7 +19,6 @@ fullscreen = 1
 android.permissions =
 android.api = 33
 android.minapi = 21
-android.sdk = 33
 android.ndk = 25b
 
 [buildozer]
