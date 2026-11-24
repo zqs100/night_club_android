@@ -12,10 +12,10 @@ version = 1.0.0.1
 
 p4a.local_recipes = p4a-recipes
 
-# hostpython3/python3 版本必须一致。pygame 的 setup.py 由 p4a 隔离的 hostpython
-# 执行，需要 hostpython 自身能 import Cython；用 p4a-recipes/cython 覆盖版把
-# Cython 安装进 hostpython 的 site-packages（官方 recipe 只装到 Android 目标环境）。
-requirements = hostpython3==3.11.9,python3==3.11.9,cython==0.29.37,pygame==2.6.1
+# hostpython3/python3 版本必须一致。pygame 2.6.1 的 setup.py 需要 Cython 3.x，
+# 通过 p4a-recipes/pygame 覆盖版的 hostpython_prerequisites 让 hostpython 自身
+# 安装 Cython；requirements 只放 Android 目标环境需要的包。
+requirements = hostpython3==3.11.9,python3==3.11.9,pygame==2.6.1
 
 orientation = landscape
 fullscreen = 1

@@ -35,7 +35,7 @@ python -m pip install buildozer
 buildozer android debug
 ```
 
-生成的 APK 位于 `bin/` 目录。首次构建需要安装 JDK、Android SDK/NDK，耗时较长。`buildozer.spec` 已固定 `hostpython3==3.11.9`、`python3==3.11.9`、`cython==0.29.37` 与 `pygame==2.6.1`，解决 Python 版本不匹配问题。pygame 编译时由 p4a 隔离的 hostpython 执行 `setup.py`，需要 hostpython 自身能导入 Cython；p4a 官方 cython recipe 只把 Cython 装进 Android 目标环境且不会调用 hostpython 安装，因此仓库用 `p4a-recipes/cython`（通过 `p4a.local_recipes` 加载）覆盖官方 recipe，额外执行 `install_hostpython_package`，把 Cython 装进 hostpython 的 site-packages，彻底解决 `You need cython` 报错。
+生成的 APK 位于 `bin/` 目录。首次构建需要安装 JDK、Android SDK/NDK，耗时较长。`buildozer.spec` 固定 `hostpython3==3.11.9`、`python3==3.11.9`、`pygame==2.6.1`，解决 Python 版本不匹配问题。pygame 2.6.1 的 `setup.py` 在 `build_ext` 一开始就 import Cython 3.x 的 API 且声明 `setup_requires: cython>=3.0`，但 p4a 默认只给隔离的 hostpython 装 setuptools，导致 `You need cython` 报错。仓库用 `p4a-recipes/pygame`（通过 `p4a.local_recipes` 加载）覆盖官方 pygame recipe，加入 `hostpython_prerequisites = ['setuptools', 'cython>=3.0,<3.1']`，让 hostpython 用自己的 pip 安装 Cython 3.0.x，从源头解决该问题。
 
 ### 云端自动打包（推荐）
 

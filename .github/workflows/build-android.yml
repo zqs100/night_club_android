@@ -38,7 +38,7 @@ jobs:
       - name: Install Python build tools
         run: |
           python -m pip install --upgrade pip setuptools wheel
-          python -m pip install "cython==0.29.37" buildozer
+          python -m pip install "cython>=3.0,<3.1" buildozer
 
       - name: Cache Buildozer downloads
         uses: actions/cache@v4
@@ -47,7 +47,7 @@ jobs:
             .buildozer
             ~/.buildozer
             bin
-          key: ${{ runner.os }}-buildozer-v2-${{ hashFiles('buildozer.spec', '.github/workflows/build-android.yml') }}
+          key: ${{ runner.os }}-buildozer-v3-${{ hashFiles('buildozer.spec', '.github/workflows/build-android.yml', 'p4a-recipes/**') }}
 
 
       - name: Build debug APK
