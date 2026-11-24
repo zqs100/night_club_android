@@ -10,8 +10,9 @@ source.exclude_dirs = build,bin,.buildozer,__pycache__,.git,.github
 
 version = 1.0.0.1
 
-# hostpython3/python3 版本必须一致；pygame 2.6.1 在 p4a 隔离环境中还需要 Cython 编译扩展
-requirements = hostpython3==3.11.9,python3==3.11.9,cython==0.29.37,pygame==2.6.1
+# hostpython3/python3 版本必须一致。pygame 编译所需的 Cython 由云端工作流通过
+# PYTHONPATH 提供给 p4a 的隔离 hostpython，不在此处重复安装到 Android 目标环境。
+requirements = hostpython3==3.11.9,python3==3.11.9,pygame==2.6.1
 
 orientation = landscape
 fullscreen = 1
