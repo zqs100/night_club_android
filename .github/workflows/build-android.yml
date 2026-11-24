@@ -68,6 +68,31 @@ jobs:
           set -o pipefail
           exit $status
 
+      - name: Diagnose build failure
+        if: failure()
+        shell: bash
+        run: |
+          echo "===== DIAG: generated build.gradle files ====="
+          find .buildozer -path '*/dists/*/build.gradle' -type f 2>/dev/null | while read -r f; do
+            echo "-------- $f --------"
+            nl -ba "$f"
+          done
+          echo "===== DIAG: project.properties ====="
+          find .buildozer -name 'project.properties' -type f 2>/dev/null | while read -r f; do
+            echo "-------- $f --------"
+            cat "$f"
+          done
+          echo "===== DIAG: gradle stacktrace rerun ====="
+          export JAVA_HOME="${JAVA_HOME_17_X64:-$JAVA_HOME}"
+          export PATH="$JAVA_HOME/bin:$PATH"
+          for d in $(find .buildozer -type d -path '*/dists/*' 2>/dev/null); do
+            if [ -f "$d/gradlew" ]; then
+              echo "-------- gradlew --stacktrace in $d --------"
+              (cd "$d" && ./gradlew assembleDebug --stacktrace --no-daemon 2>&1 | tail -120) || true
+              break
+            fi
+          done
+
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
